@@ -1,9 +1,8 @@
-use kira::{
-    manager::{AudioManager, AudioManagerSettings, backend::DefaultBackend},
-    sound::static_sound::{StaticSoundData, StaticSoundSettings},
-    track::{TrackBuilder, TrackHandle},
-    Volume, tween::Tween,
-};
+use kira::manager::{AudioManager, AudioManagerSettings, backend::DefaultBackend};
+use kira::sound::static_sound::{StaticSoundData, StaticSoundSettings};
+use kira::track::{TrackBuilder, TrackHandle};
+use kira::tween::Tween;
+use kira::Volume;
 use std::sync::Mutex;
 use std::time::Duration;
 

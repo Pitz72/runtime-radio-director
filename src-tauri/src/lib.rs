@@ -1,13 +1,15 @@
 mod db;
+mod audio;
 
 use std::sync::Mutex;
 use rusqlite::Connection;
 use tauri::Manager;
 use serde::{Deserialize, Serialize};
 
-// Wrapper per contenere il Database in memoria (Thread Safe)
+// Wrapper per contenere il Database e l'Audio Engine in memoria
 pub struct AppState {
     pub db: Mutex<Connection>,
+    pub audio_engine: audio::RadioAudioEngine,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -21,6 +23,7 @@ pub struct Track {
 
 #[tauri::command]
 fn get_tracks(state: tauri::State<AppState>) -> Result<Vec<Track>, String> {
+    // ... DB LOGIC ...
     let db = state.db.lock().map_err(|e| e.to_string())?;
     let mut stmt = db.prepare("SELECT id, title, artist, duration_ms, category FROM tracks").map_err(|e| e.to_string())?;
     
@@ -42,22 +45,36 @@ fn get_tracks(state: tauri::State<AppState>) -> Result<Vec<Track>, String> {
     Ok(tracks)
 }
 
+#[tauri::command]
+fn play_audio(path: String, state: tauri::State<AppState>) -> Result<(), String> {
+    state.audio_engine.play_test_file(&path)
+}
+
+#[tauri::command]
+fn toggle_mic(active: bool, state: tauri::State<AppState>) -> Result<(), String> {
+    state.audio_engine.set_mic_ducking(active)
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
-            // Risolve automaticamente la cartella dati in base a Win/Mac/Linux
+            // DB Init
             let app_data_dir = app.path().app_data_dir().expect("Failed to get App Data dir");
             let conn = db::initialize_database(&app_data_dir).expect("Failed to init database");
             
-            // Inietta il pointer al DB nello Stato Globale Globale
+            // Audio Init
+            let engine = audio::RadioAudioEngine::new().expect("Failed to init Kira audio engine");
+
+            // Inietta nello Stato Globale
             app.manage(AppState {
                 db: Mutex::new(conn),
+                audio_engine: engine,
             });
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_tracks])
+        .invoke_handler(tauri::generate_handler![get_tracks, play_audio, toggle_mic])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

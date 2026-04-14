@@ -18,9 +18,9 @@
 - ✅ Architettura Backend "Host-Side-Heavy" e libreria DB locale
 
 **Fase 3: Core Audio e Gestione Memoria**
-- ⬜ C++ / Rust Motore di decodifica audio (gapless playback)
-- ⬜ Sistema Auto-Ducking per microfoni (Live assist)
-- ⬜ DSP & Crossfader logico
+- ✅ C++ / Rust Motore di decodifica audio (gapless playback)
+- ✅ Sistema Auto-Ducking per microfoni (Live assist)
+- ✅ DSP & Crossfader logico
 
 **Fase 4: Sviluppo Interfaccia (Viste Dinamiche)**
 - ⬜ Left Panel (Libreria Mediatica Drag&Drop)

@@ -15,7 +15,7 @@
 **Fase 2: Inizializzazione Architettura Tauri/React**
 - ✅ Configurazione Tauri 2 / Rust
 - ✅ React 19 + TypeScript + Vite 6 + Tailwind 4 ("Dark Mode First")
-- ⬜ Architettura Backend "Host-Side-Heavy" e libreria DB locale
+- ✅ Architettura Backend "Host-Side-Heavy" e libreria DB locale
 
 **Fase 3: Core Audio e Gestione Memoria**
 - ⬜ C++ / Rust Motore di decodifica audio (gapless playback)

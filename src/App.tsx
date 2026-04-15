@@ -1,50 +1,36 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/core";
 import "./App.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+import LeftPanel from "./components/LeftPanel";
+import CenterPanel from "./components/CenterPanel";
+import RightPanel from "./components/RightPanel";
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-    setGreetMsg(await invoke("greet", { name }));
-  }
+function App() {
+  const [statusMessage, setStatusMessage] = useState("System Ready.");
 
   return (
-    <main className="container">
-      <h1>Welcome to Tauri + React</h1>
+    <div className="flex flex-col h-screen bg-neutral-950 text-white font-sans overflow-hidden pattern-dots">
+      {/* HEADER */}
+      <header className="bg-neutral-900 p-4 border-b border-neutral-800 flex justify-between items-center shadow-md z-10">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+          <h1 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-500 to-red-500 tracking-tight">
+            RUNTIME RADIO DIRECTOR
+          </h1>
+        </div>
+        <div className="bg-neutral-800 border border-neutral-700 px-4 py-1.5 rounded-full flex items-center gap-2">
+          <span className="w-2 h-2 bg-cyan-400 rounded-full"></span>
+          <p className="text-sm font-mono text-cyan-400">{statusMessage}</p>
+        </div>
+      </header>
 
-      <div className="row">
-        <a href="https://vite.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
-
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
-      <p>{greetMsg}</p>
-    </main>
+      {/* WORKSPACE */}
+      <main className="flex flex-1 overflow-hidden">
+        <LeftPanel />
+        <CenterPanel setStatusMessage={setStatusMessage} />
+        <RightPanel setStatusMessage={setStatusMessage} />
+      </main>
+    </div>
   );
 }
 

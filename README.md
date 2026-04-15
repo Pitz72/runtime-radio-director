@@ -1,6 +1,6 @@
 # Runtime Radio Director
 
-### Software Desktop Multipiattaforma per l'Automazione Radiofonica e il Live Assist ad elevate performance (Tauri/React)
+## Software Desktop Multipiattaforma per l'Automazione Radiofonica e il Live Assist ad elevate performance (Tauri/React)
 
 ---
 
@@ -27,9 +27,9 @@
 
 ### Fase 4: Sviluppo Interfaccia (Viste Dinamiche)
 
-- ⬜ Left Panel (Libreria Mediatica Drag&Drop)
-- ⬜ Center Panel (Mix e Coda eventi interattiva con regole visibili)
-- ⬜ Top Bar e Right Panel (Mixer DSP & Status)
+- ✅ Left Panel (Libreria Mediatica Drag&Drop)
+- ✅ Center Panel (Mix e Coda eventi interattiva con regole visibili)
+- ✅ Top Bar e Right Panel (Mixer DSP & Status)
 
 ### Fase 5: Motore di Automazione e Scheduler
 

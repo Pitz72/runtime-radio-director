@@ -13,6 +13,13 @@ pub fn initialize_database(app_data_dir: &PathBuf) -> Result<Connection> {
     // Connessione diretta a file unico
     let conn = Connection::open(db_path)?;
 
+    // Ottimizzazioni DB SQLite per uso in Radio (Concorrenza Lettura/Scrittura)
+    conn.execute_batch(
+        "PRAGMA journal_mode = WAL;
+         PRAGMA synchronous = NORMAL;
+         PRAGMA foreign_keys = ON;"
+    )?;
+
     // Table Media Library
     conn.execute(
         "CREATE TABLE IF NOT EXISTS tracks (
